@@ -1,6 +1,6 @@
 # new/malloc
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b230fe1d-9b26-4cfe-b8fd-19ad62a47074/Untitled.png)
+![image](https://user-images.githubusercontent.com/94472801/164762981-f1c5f312-8c46-4799-a82c-8df5ff4de9c4.png)
 
 - new/delete是C++关键字、操作符，需要编译器支持，不需要头文件支持。malloc/free是库函数，需要头文件支持。
 - new做两件事，一是分配内存，二是调用类的构造函数；同样，delete会调用类的析构函数和释放内存。而malloc和free只是分配和释放内存。
