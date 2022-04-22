@@ -1,9 +1,10 @@
+# 参考链接
 https://blog.csdn.net/nyist_zxp/article/details/80810742?spm=1001.2101.3001.6650.3&depth_1-utm_relevant_index=6
 https://blog.csdn.net/nie19940803/article/details/76358673
 https://www.cnblogs.com/litao-tech/p/4318424.html
 https://www.cnblogs.com/QG-whz/p/5060894.html
 
-- new/delete是C++关键字、操作符，需要编译器支持。malloc/free是库函数，需要头文件支持。
+new/delete是C++关键字、操作符，需要编译器支持。malloc/free是库函数，需要头文件支持。
 new做两件事，一是分配内存，二是调用类的构造函数；同样，delete会调用类的析构函数和释放内存。而malloc和free只是分配和释放内存。
 new建立的是一个对象，而malloc分配的是一块内存；new建立的对象可以用成员函数访问，不要直接访问它的地址空间；malloc分配的是一块内存区域，用指针访问，可以在里面移动指针；new出来的指针是带有类型信息的，而malloc返回的是void指针。
 new/delete是保留字，不需要头文件支持；malloc/free需要头文件库函数支持。
@@ -15,6 +16,7 @@ malloc/free是库函数，只能动态的申请和释放内存，无法强制要
 C++允许重载new/delete操作符，特别的，布局new的就不需要为对象分配内存，而是指定了一个地址作为内存起始区域，new在这段内存上为对象调用构造函数完成初始化工作，并返回此地址。而malloc不允许重载。
 new操作符从自由存储区（free store）上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。而堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配，C语言使用malloc从堆上分配内存，使用free释放已分配的对应内存。自由存储区不等于堆，如上所述，布局new就可以不位于堆中。
 
+# 自由存储区 堆
 自由存储是C++中通过new与delete动态分配和释放对象的抽象概念，而堆（heap）是C语言和操作系统的术语，是操作系统维护的一块动态分配内存。
 new所申请的内存区域在C++中称为自由存储区。藉由堆实现的自由存储，可以说new所申请的内存区域在堆上。
 堆与自由存储区还是有区别的，它们并非等价。
