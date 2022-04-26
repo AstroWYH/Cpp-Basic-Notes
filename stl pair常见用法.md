@@ -37,7 +37,7 @@ Author Joy("James","Joy");
 // 变量间赋值
 pair<int, double> p1(1, 1.2);
 pair<int, double> p2 = p1; // 拷贝构造
-pair<int, double> p3；
+pair<int, double> p3;
 p3 = p1; // 拷贝赋值运算符
 ```
 
