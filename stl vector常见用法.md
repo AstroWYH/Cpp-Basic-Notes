@@ -61,6 +61,23 @@ for(vector<float>::iterator it = vecClass.begin();it!=vecClass.end();it++)
 }
 ```
 
+## 插入元素
+
+```cpp
+// 尾部插入push_back() emplace_back()
+vec.push_back(1);
+
+// 位置插入insert（4种方式），返回被插入 value 的迭代器
+it = v.insert(iter, 9); //（1）iter位置插入9
+v.insert(iter, 3, 1); // （2）iter位置插入3个1
+vector<int> vec2(2,400);
+vec.insert(iter+2, vec2.begin(), vec2.end()); // （3）inter位置插入vector<int>指定区间{2,400}
+int arr[] = {100, 101};
+v.insert(iter, arr, arr+2); // （4）iter位置插入数组区间{100,101}
+
+// 参考：https://zh.cppreference.com/w/cpp/container/vector/insert
+```
+
 ## 算法
 
 ```cpp
