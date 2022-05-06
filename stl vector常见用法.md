@@ -39,7 +39,7 @@ front() // 返回起始元素的引用
 back() // 返回末尾元素的引用
 ```
 
-![image-20220424020806990](https://gitee.com/hanbabang/hanbabang-pics/raw/master/image-20220424020806990.png)
+![image-20220424020806990](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20220424020806990.png)
 
 ## 访问元素
 
@@ -133,7 +133,7 @@ int main(void)
 }
 ```
 
-![img](https://gitee.com/hanbabang/hanbabang-pics/raw/master/20160417222951238)
+![img](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/20160417222951238)
 
 ### 参考链接
 
