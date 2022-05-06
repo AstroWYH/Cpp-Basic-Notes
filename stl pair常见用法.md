@@ -1,6 +1,4 @@
-
-
-# 标准库pair
+# stl pair常见用法
 
 [std::pair - cppreference.com](https://zh.cppreference.com/w/cpp/utility/pair)
 
