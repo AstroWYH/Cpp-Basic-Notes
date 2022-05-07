@@ -21,7 +21,10 @@ unordered_multiset       哈希组织的set，关键字可以重复
 ```c++
 set<int> q;     //以int型为例 默认按键值升序
 set<int,greater<int>> p;  //降序排列 
-int x;
+
+set<int> q(n.begin(), n.end()); //n是vector<int>，q是将n去除重复元素的set<int>
+vector<int> n(q.begin(), q.end()) //q是set<int>，主要体现两者拷贝构造的相互转换
+
 q.insert(x);	//将x插入q中
 q.erase(x);		//删除q中的x元素,返回0或1,0表示set中不存在x
 q.clear();		//清空q
