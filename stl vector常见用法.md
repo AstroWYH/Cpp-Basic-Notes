@@ -61,6 +61,21 @@ for(vector<float>::iterator it = vecClass.begin();it!=vecClass.end();it++)
 }
 ```
 
+## 重新赋值
+
+```c++
+vector<int> nums;
+nums = {0,1,2,3};
+for (auto &n : nums) {
+    cout<< n << endl; // 0 1 2 3
+}
+
+nums = {0,1,5}; // 可以c直接覆盖，传统数组不行。
+for (auto &n : nums) {
+    cout<< n << endl; // 0 1 5
+}
+```
+
 ## 插入元素
 
 ```cpp
