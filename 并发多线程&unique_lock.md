@@ -1,125 +1,4 @@
-# 并发多线程&mutex&lock_guard&unique_lock&死锁
-
-锁用来在多线程访问同一个资源时防止数据竞险，保证数据的一致性访问。多线程本来就是为了提高效率和响应速度，但锁的使用又限制了多线程的并行执行，这会降低效率，但为了保证数据正确，不得不使用锁，它们就是这样纠缠。结合锁进行线程间同步的条件变量使用，请参考条件变量condition variable 。
-
-保护共享数据，操作时某个线程用代码把共享数据锁住，操作数据、解锁；
-其他想操作共享数据的线程必须等待解锁，锁定住，操作，解锁。
-
-## mutex互斥量
-
-需要`#include <mutex>`
-
-- 多个线程尝试用lock()成员函数来加锁这把锁头，只有一个线程能锁定成功（成功的标志是lock()函数返回）。
-- 如果没锁成功，那么流程卡在lock()这里，不断尝试去锁这把锁头。
-- 先lock()，操作共享数据，再unlock()，每调用一次lock()，必然应该调用一个unlock()。
-
-```cpp
-#include <list>
-#include <thread>
-#include <mutex>
-
-class A
-{
-public:
-    //把收到的消息（玩家命令）入到一个队列的线程
-    void inMsgRecvQueue()
-    {
-        for (int i = 0;i < 100;++i)
-        {
-            cout << "inMsgRecvQueue()执行，插入一个元素" << i << endl;
-            my_mutex.lock();
-            msgRecvQueue.push_back(i);
-            my_mutex.unlock();
-        }
-    }
-
-    bool outMsgLULProc(int& command)
-    {
-        my_mutex.lock();
-        if (!msgRecvQueue.empty())
-        {
-            command = msgRecvQueue.front();
-            msgRecvQueue.pop_front();
-            my_mutex.unlock();
-            return true;
-        }
-        my_mutex.unlock();
-        return false; 
-    }
-
-    //把数据从消息队列中取出的线程
-    void outMsgRecvQueue()
-    {
-        int command = 0;
-        for (int i = 0;i < 100;i++)
-        {
-            bool result = outMsgLULProc(command);
-            if (result == true)
-            {
-                cout << "outMsgRecvQueue()执行，取出一个元素" << command << endl;
-                //可以考虑对命令(数据)进行处理
-            }
-            else
-            {
-                cout << "outMsgRecvQueue()执行，但是目前消息队列中为空" << i << endl;
-            }
-        }
-        cout << "end" << endl;
-    }
-
-private:
-    std::list<int> msgRecvQueue;    //容器,专门用于代表玩家给咱们发送过来的命令
-    std::mutex my_mutex; //创建一个互斥量 
-};
-
-int main()
-{
-    A myobja;
-    std::thread myOutnMsgObj(&A::outMsgRecvQueue,&myobja);
-    std::thread myInMsgObj(&A::inMsgRecvQueue,&myobja);
-    myInMsgObj.join();
-    myOutnMsgObj.join();
-
-    return 0;
-}
-```
-
-## lock_guard
-
-- 为了防止大家忘记unlock()，引入了一个叫std::lock_guard()的类模板：你忘记unlock()不要紧，我替你unlock()。
-- 类似智能指针：你忘记释放内存不要紧，我替你释放。
-- 创建lock_guard对象时，它将尝试获取提供给它的互斥锁的所有权。当控制流离开lock_guard对象的作用域时，lock_guard析构并释放互斥量。
-
-- lock_guard取代了mutex的lock()和unlock()。
-- 创建即加锁，作用域结束自动析构并解锁，无需手工解锁。
-- 不能中途解锁，必须等作用域结束才解锁。
-- 不能复制。
-
-```cpp
-bool outMsgLULProc(int& command)
-{
-    // my_mutex.lock();
-    std::lock_guard<std::mutex> sguard(my_mutex); // std::lock_guard
-    if (!msgRecvQueue.empty())
-    {
-        command = msgRecvQueue.front();
-        msgRecvQueue.pop_front();
-        // my_mutex.unlock();
-        return true;
-    }
-    // my_mutex.unlock();
-    return false; 
-}
-```
-
-### **std::adopt_lock**（第2个参数）
-
-- 前提：mutex需要提前lock() ，否者会报异常。
-- 含义：起标记作用，表示这个互斥量已经被lock了，通知lock_guard不需要再在构造函数中调用std::mutex::lock()。
-- unique_lock也可以带std::adopt_lock标记，含义相同，就是不希望再在unique_lock()的构造函数中lock这个mutex。
-
-
-## unique_lock
+# unique_lock
 
 unique_lock 是 lock_guard 的升级加强版，它具有 lock_guard 的所有功能，同时又具有其他很多方法，使用起来更强灵活方便，能够应对更复杂的锁定需要。
 
@@ -130,7 +9,13 @@ unique_lock 是 lock_guard 的升级加强版，它具有 lock_guard 的所有�
 - 不可复制，可移动。
 - 条件变量需要该类型的锁作为参数（此时必须使用unique_lock）。
 
-### **std::try_to_lock**（第2个参数）
+#### **std::adopt_lock**（第2个参数）
+
+- 前提：mutex需要提前lock() ，否者会报异常。
+- 含义：起标记作用，表示这个互斥量已经被lock了，通知lock_guard不需要再在构造函数中调用std::mutex::lock()。
+- unique_lock也可以带std::adopt_lock标记，含义相同，就是不希望再在unique_lock()的构造函数中lock这个mutex。
+
+#### **std::try_to_lock**（第2个参数）
 
 - 前提：mutex不能提前被lock()，否者会报异常。
 - 含义：会尝试用mutex的lock()去锁定这个mutex，但如果没有锁定成功，也会立即返回，并不会阻塞在那里。
@@ -233,12 +118,12 @@ int main()
 }
 ```
 
-### std::defer_lock（第2个参数）
+#### std::defer_lock（第2个参数）
 
 - 前提：mutex不能提前被lock()，否者会报异常。
 - 含义：表示并没有给mutex加锁，只是初始化了一个没有加锁的mutex。
 
-### lock() & unlock()（成员函数）
+#### lock() & unlock()（成员函数）
 
 - unique_lock生命周期内，加锁和解锁。
 - 如果不想在定义unique_lock对象就给互斥量加上锁，那么就要在参数表中加入std::defer_lock，等到需要加锁时再引用方法lock()，这就是lock()的用处。
@@ -265,7 +150,7 @@ void foo()
 
 - 要学会尽量选择合适粒度的代码进行保护，粒度太细，可能漏掉共享数据的保护；粒度太粗，会影响程序的运行效率。所以，选择合适的粒度，是高级程序员的能力和实力的体现。
 
-### try_lock()（成员函数）
+#### try_lock()（成员函数）
 
 - 尝试给互斥量加锁，如果拿不到锁，返回false；如果拿到了锁，返回true，这个函数是不阻塞的。
 - 注：owns_lock()是判定是否拿到了锁，返回bool；而try_lock会尝试加锁，再返回bool。
@@ -286,7 +171,7 @@ void inMsgRecvQueue(void)
 }
 ```
 
-### release（成员函数）
+#### release（成员函数）
 
 - 作用：返回它所管理的mutex对象指针，并释放所有权；也就是说，unique_lock和mutex不再有任何关系。
 
@@ -310,7 +195,7 @@ void inMsgRecvQueue(void)
 }
 ```
 
-### unique_lock所有权的传递
+#### unique_lock所有权的传递
 
 **1）使用移动语义std::move**：myUnique拥有myMutex的所有权，myUnique可以把自己对myMutex的所有权转移，但不能拷贝复制。
 
@@ -327,92 +212,6 @@ void inMsgRecvQueue(void)
     }
     return;
 }
-```
-
-2）返回临时对象mutex
-
-```cpp
-unique_lock<mutex> func()
-{
-    unique_lock<mutex> tmpmyUnique(myMutex);
-    return tmpmyUnique;
-    //移动构造函数：从函数返回一个局部的unique_lock对象是可以的
-    //返回这种局部对象会导致系统生成临时的unique_lock对象，并调用unique_lock的移动构造函数
-}
-
-void inMsgRecvQueue(void)
-{
-    for (int i = 0; i < 10000; ++i)
-    {
-        unique_lock<mutex> myUnique = func(); // 会调用移动构造函数
-        cout << "inMsgRecvQueue()执行，插入一个元素" << i << endl;
-        msgRecvQueue.push_back(i);
-    }
-    return;
-}
-```
-
-## 死锁
-
-张三：站在北京等李四，不挪窝；
-李四：站在北京等张三，不挪窝。
-
-C++：比如有两把锁（死锁这个问题，至少有两个锁头，即两个互斥量才能产生）。
-
-两个线程A和B：
-
-1. 线程A执行的时候，这个线程先锁金锁，把金锁lock()成功了，然后去lock银锁；
-2. 线程B执行了，这个线程先锁银锁，因为银锁还没有被锁，所以银锁会lock成功，线程B要去lock金锁；
-3. 此时此刻，死锁就产生了；
-4. 线程A因为拿不到银锁头，流程走不下去。
-5. 线程B因为拿不到金锁头，流程走不下去。
-
-```cpp
-void inMsgRecvQueue()
-{
-    for (int i = 0;i < 100000;++i)
-    {
-        cout << "inMsgRecvQueue()执行，插入一个元素" << i << endl;
-        my_mutex1.lock(); // 线程A拿到金锁
-        my_mutex2.lock(); // 线程A尝试拿银锁，被线程B拿了，所以拿不到，卡在这
-        msgRecvQueue.push_back(i);
-        my_mutex2.unlock();
-        my_mutex1.unlock();
-    }
-}
-
-bool outMsgLULProc(int& command)
-{
-    my_mutex2.lock(); // 线程B上来拿到银锁
-    my_mutex1.lock(); // 线程B尝试拿金锁，被线程A拿了，所以拿不到，卡在这
-    if (!msgRecvQueue.empty())
-    {
-        command = msgRecvQueue.front();
-        msgRecvQueue.pop_front();
-        my_mutex1.unlock();
-        my_mutex2.unlock();
-        return true;
-    }
-    my_mutex1.unlock();
-    my_mutex2.unlock(); 
-    return false; 
-}
-```
-
-**死锁的解决方案：只要保证两个互斥量上锁的顺序保持一致就不会死锁。**
-
-### std::lock()函数模板
-
-- 能力：用来处理多个互斥量。一次锁住两个或者两个以上互斥量(至少两个，多了不限，1个不行)。
-- 它不存在这种因为在多个线程中，因为锁的问题导致死锁的风险问题。
-- std::lock()：如果互斥量中有一个没锁住，他就在那里等着，等着所有互斥量都锁住，他才能往下走(返回)。
-- 特点：要么两个互斥量都锁住，要么两个互斥量都没锁住 。如果只锁了一个，另外一个没锁成功，则它立即把已经锁住的解锁。
-
-```cpp
-std::lock(my_mutex1,my_mutex2); // std::lock()
-msgRecvQueue.push_back(i);
-my_mutex2.unlock();
-my_mutex1.unlock();
 ```
 
 ### 参考链接
