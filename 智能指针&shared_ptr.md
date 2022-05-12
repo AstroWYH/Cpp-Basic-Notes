@@ -8,6 +8,7 @@
 ```cpp
 std::shared_ptr<int> p1(new int());
 std::shared_ptr<int> p1 = std::make_shared<int>();
+std::shared_ptr<int> p1 = new int(); // 错误，因为shared_ptr内部是显示构造。
 ```
 
 #### 检查 shared_ptr 对象的引用计数
@@ -19,9 +20,12 @@ p1.use_count();
 #### 分离关联的原始指针
 
 ```c++
-p1.reset(); // 它将引用计数减少1，如果引用计数变为0，则删除指针。
-p1.reset(new int(34)); // 在这种情况下，它将在内部指向新指针，因此其引用计数将再次变为1。
-p1 = nullptr; // 使用nullptr重置，取消之前托管指针的联系。
+std::shared_ptr<int> p3 = p1; // 假如此时 p1.use_count = p3.use_count = 2。
+p1.reset(); // 这种情况，p1.use_count = 0（直接分离），而p3.use_count = 1，这是因为分离2个指针了，所以不共享引用计数。
+// 如果没有这个p3，则p1.use_count = 0后，原始指针引用计数为0，直接会被delete。
+
+p1.reset(new int(34)); // 这种情况，它将在内部指向新指针，p1.use_count = 1。
+p1 = nullptr; // p1.use_count = 0。
 ```
 
 #### shared_ptr是一个伪指针
