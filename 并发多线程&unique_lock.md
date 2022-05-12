@@ -1,4 +1,4 @@
-# unique_lock
+# 并发多线程&unique_lock
 
 unique_lock 是 lock_guard 的升级加强版，它具有 lock_guard 的所有功能，同时又具有其他很多方法，使用起来更强灵活方便，能够应对更复杂的锁定需要。
 
