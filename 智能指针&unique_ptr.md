@@ -1,6 +1,90 @@
 # 智能指针&unique_ptr
 
+#### unique_ptr 独享所有权
 
+- unique_ptr对象始终是关联的原始指针的唯一所有者。
+- 我们无法复制unique_ptr对象，它只能移动。
+- 由于每个unique_ptr对象都是原始指针的唯一所有者，因此在其析构函数中它直接删除关联的指针，不需要任何参考计数。
+
+#### 创建 unique_ptr 对象
+
+```cpp
+std::unique_ptr<int> ptr1;
+std::unique_ptr<Task> taskPtr(new Task(22));
+std::unique_ptr<Task> taskPtr = std::make_unique<Task>(34); // C++ 14 引入
+std::unique_ptr<Task> taskPtr(new std::unique_ptr<Task>::element_type(23)); // 不常用
+std::unique_ptr<Task> taskPtr2 = new Task(); // 编译错误，不能隐式构造，和shared_ptry
+```
+
+#### 获取被管理对象的指针
+
+```cpp
+Task *p1 = taskPtr.get();
+```
+
+#### 重置 unique_ptr 对象
+
+```cpp
+taskPtr.reset(); // delete原始关联指针，并taskPtr = nullptr置空，不需要考虑引用计数之类的。
+```
+
+#### unique_ptr 对象不可复制
+
+```cpp
+// 编译错误 : unique_ptr 不能复制
+std::unique_ptr<Task> taskPtr3 = taskPtr2; // 拷贝构造函数，Compile error
+// 编译错误 : unique_ptr 不能复制
+taskPtr = taskPtr2; // 拷贝赋值运算符，compile error
+```
+
+#### 转移 unique_ptr 对象的所有权
+
+![image-20220513185056558](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20220513185056558.png)
+
+```cpp
+// 通过原始指针创建 taskPtr2
+std::unique_ptr<Task> taskPtr2(new Task(55));
+// 通过std::move转移给 taskPtr4
+std::unique_ptr<Task> taskPtr4 = std::move(taskPtr2);
+// 现在taskPtr2 = nullptr
+
+// std::move() 将把 taskPtr2 转换为一个右值引用。然后调用 unique_ptr 的移动构造函数，并将关联的原始指针传输到 taskPtr4。
+// 在转移完原始指针的所有权后， taskPtr2将变为空。
+```
+
+#### 可以返回unique_ptr
+
+```cpp
+unique_ptr<int> clone(int p) {
+    unique_ptr<int> pInt(new int(p));
+    return pInt;    // 返回unique_ptr
+}
+
+int main() {
+    int p = 5;
+    unique_ptr<int> ret = clone(p); // 其实和std::move转成右值后移动是一样的，函数返回的也是右值，可以调用移动构造函数。
+    cout << *ret << endl;
+}
+```
+
+#### 释放关联的原始指针
+
+- 在 unique_ptr 对象上调用 release()将释放其关联的原始指针的所有权，并返回原始指针。
+- **这里是释放所有权，并没有delete原始指针，reset()会delete原始指针。**
+
+```cpp
+std::unique_ptr<Task> taskPtr5(new Task(55));
+// 释放关联指针的所有权
+Task* ptr = taskPtr5.release(); // 返回原始指针到ptr
+// 现在taskPtr5为空
+if(taskPtr5 == nullptr) std::cout<<"taskPtr5 is empty"<<std::endl;
+```
+
+#### reset() & release() & get()对比
+
+- reset()	    重置unique_ptr为空，delete其关联的指针。
+- release()	不delete关联指针，并返回关联指针。取消关联指针的所有权，unique_ptr为空。
+- get()	        仅仅返回关联指针。
 
 ### 参考链接
 

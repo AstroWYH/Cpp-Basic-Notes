@@ -103,6 +103,13 @@ int n=s4.rfind("ABC");   s4：AAAABCD    ->   n = 3
 str.rfind('B',1)——从 位置1 处，向前查找'B'
 str.rfind("ABC",1,2)——从 位置1 处，开始向前查找 'ABC' 的前 2个 字符
 
+// 如果字符串不存在包含关系，那么返回值就一定是npos
+if(a.find(b)!=string::npos){
+	cout<<"yes"<<endl;
+}else{
+	cout<<"no"<<endl;
+}
+
 // find_first_of()函数
 // 查找是否包含有子串中任何一个字符
 str.find_first_of("abBc")——查找 "abBc" 和str 相等的任何字符，"abBc" 中有就返回位置

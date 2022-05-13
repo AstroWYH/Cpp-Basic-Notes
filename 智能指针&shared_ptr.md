@@ -21,7 +21,7 @@ p1.use_count();
 
 ```c++
 std::shared_ptr<int> p3 = p1; // 假如此时 p1.use_count = p3.use_count = 2。
-p1.reset(); // 这种情况，p1.use_count = 0（直接分离），而p3.use_count = 1，这是因为分离2个指针了，所以不共享引用计数。
+p1.reset(); // 这种情况，p1 p1.use_count = 0（直接分离），而p3.use_count = 1，这是因为分离2个指针了，所以不共享引用计数。
 // 如果没有这个p3，则p1.use_count = 0后，原始指针引用计数为0，直接会被delete。
 
 p1.reset(new int(34)); // 这种情况，它将在内部指向新指针，p1.use_count = 1。
