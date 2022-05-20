@@ -1,4 +1,4 @@
-# sting&char*&char[]对比
+# sting&char*&char[]
 
 ## string转换成const char *（容易）
 
