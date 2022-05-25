@@ -4,7 +4,7 @@
 
 关联容器的一种，需要`#include<set>`
 
-## 几种对比
+### 几种对比
 
 ```c++
 按关键字有序保存元素
@@ -16,7 +16,7 @@ unordered_set            用哈希函数组织的set，无序
 unordered_multiset       哈希组织的set，关键字可以重复
 ```
 
-## 常用操作
+### 常用操作
 
 ```c++
 set<int> q;     //以int型为例 默认按键值升序
@@ -41,25 +41,40 @@ q.end();		 //返回指向q最后一个元素下一个位置的迭代器
 q.rbegin();		 //返回最后一个元素
 ```
 
-## 插入元素
+### 插入元素
 
 ```c++
 s.insert(10);
 s.insert(v.begin(), v.end());
 ```
 
-## 查找和读取元素
+### 查找和读取元素
 
 ```c++
 // 与map类似
 s.find(key);
 ```
 
-## 删除元素
+### 删除元素
 
 ```c++
 s.erase(s.begin(), s.end());
 ```
+
+### 容器for()遍历
+
+```c++
+for(auto &s : set) // ok
+```
+
+### unordered_set不能放入pair
+
+```cpp
+unordered_set<pair<int, int>> set; // error，unordered_set不能放入pair，unordered_map同理
+set<pair<int, int>> set; // ok
+```
+
+
 
 ### 参考链接
 
