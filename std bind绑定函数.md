@@ -10,12 +10,12 @@
 ```cpp
 double callableFunc (double x, double y) {return x/y;}
 auto NewCallable = std::bind (callableFunc, std::placeholders::_1,2); // std::bind
-NewCallable (10);                  
+NewCallable(10);                  
 ```
 
 - bind的第一个参数是函数名，**普通函数做实参时，会隐式转换成函数指针**。因此`std::bind(callableFunc,_1,2)`等价于std::bind (&callableFunc,_1,2)。
 - `_1`表示占位符，std::placeholders::_1，`2`表示传的参数就是2。
-- 第一个参数被占位符占用，表示这个参数以调用时传入的参数为准，在这里调用NewCallable时，给它传入了10，其实就想到于调用callableFunc(10,2);
+- 第一个参数被占位符占用，表示这个参数以调用时传入的参数为准，在这里调用NewCallable时，给它传入了10，其实就相当于调用callableFunc(10,2);
 
 ### 2 std::bind绑定一个成员函数
 
@@ -33,7 +33,7 @@ int main()
 {
     Base base;
     auto newiFunc = std::bind(&Base::display_sum, &base, 100, std::placeholders::_1); // std::bind
-    f(20); // cout 120
+    newiFunc(20); // cout 120
 }
 ```
 
@@ -89,10 +89,10 @@ int main(int argc, const char * argv[])
     cout<<n<<endl;//print:2  说明：n是值传递，bind对于直接传递的参数是值传递，可通过std::ref或std::cref引用传递
 
     A a;
-    auto f5 = std::bind(&A::fun_3, &a,placeholders::_1,placeholders::_2);
+    auto f5 = std::bind(&A::fun_3, &a,placeholders::_1, placeholders::_2);
     f5(10,20);//print:10 20
 
-    std::function<void(int,int)> fc = std::bind(&A::fun_3, &a,std::placeholders::_1,std::placeholders::_2);
+    std::function<void(int,int)> fc = std::bind(&A::fun_3, &a, std::placeholders::_1, std::placeholders::_2);
     fc(10,20);//print:10 20
 
     return 0;

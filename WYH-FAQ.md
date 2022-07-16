@@ -35,6 +35,7 @@
 10. segment cache和out 异步线程需要2个buffer，经典双缓存，一个跑异步segment，一个送下个render算子（新线程）
 11. 不能对临时变量加引用。
 12. const变量（或指针）不能调用其非const成员函数。
+13. 可以加一个条件变量condition_variable的问题，然后在过程中把wait、notify、ready的原因搞明白。
 
 **OpenGL基础&优化**
 
