@@ -9,6 +9,18 @@
 
 ## 难点
 
+**要做的点**
+
+1. 视频neon项目代码，工程能力，框架。
+
+   包括：性能优化、多线程、设计模式。
+
+2. OpenGL优化，Shader至少学懂neon的。
+
+3. Mediapipe熟悉。
+
+4. Android能力，android studio app开发。
+
 **C++问题积累**
 
 1. vector的底层实现。
