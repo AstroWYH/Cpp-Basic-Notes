@@ -14,7 +14,7 @@ constexpr int sz = size(); // 之后当size是一个constexpr函数时才是一�
 
 - const并未区分编译期常量和运行期常量。
 
-- constexpr限定在了编译期常量。
+- constexpr限定在了编译期常量。（更严格）。
 
 
 ### 修饰函数
