@@ -16,7 +16,7 @@
 
 ### 典型案例
 
-![image-20220716194833225](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20220716194833225.png)
+![image-20220716201109182](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20220716201109182.png)
 
 ```cpp
 #include <iostream>
