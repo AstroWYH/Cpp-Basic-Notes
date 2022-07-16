@@ -105,6 +105,11 @@ int nSize = mapStudent.size();
  upper_bound()    返回键值>给定元素的第一个位置
  value_comp()     返回比较元素value的函数
 ```
+## insert() 插入元素
+
+- vector insert()的返回值：指向被插入 `value` 的迭代器。
+- map insert()的返回值：返回由指向被插入元素的迭代器（或阻止插入的元素的迭代器）和指代插入是否发生的 bool 组成的 pair 。
+
 ## map&unordered_map ”有序“&”无序“
 
 ```cpp
