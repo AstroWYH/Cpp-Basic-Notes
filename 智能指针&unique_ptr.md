@@ -86,6 +86,34 @@ if(taskPtr5 == nullptr) std::cout<<"taskPtr5 is empty"<<std::endl;
 - release()	不delete关联指针，并返回关联指针。取消关联指针的所有权，unique_ptr为空。
 - get()	        仅仅返回关联指针。
 
+```cpp
+// unique_ptr::reset example
+#include <iostream>
+#include <memory>
+
+int main () {
+  std::unique_ptr<int> up;  // empty
+
+  up.reset(new int);       // takes ownership of pointer
+  *up=5;
+  std::cout << *up << '\n';
+
+  up.reset(new int);       // deletes managed object, acquires new pointer
+  *up=10;
+  std::cout << *up << '\n';
+
+  up.reset();               // deletes managed object
+
+  return 0;
+}
+
+Output:
+5
+10
+```
+
+
+
 ### 参考链接
 
 [(18条消息) 【C++11】 之 std::unique_ptr 详解_Amelie_xiao的博客-CSDN博客_c++ std::unique_ptr](https://blog.csdn.net/lemonxiaoxiao/article/details/108603916?spm=1001.2101.3001.6650.2&depth_1-utm_relevant_index=5)

@@ -23,19 +23,43 @@
 
 **C++问题积累**
 
-1. vector的底层实现。
-2. dlclose nodelete问题，导致内存常驻；编译器优化了pthreadkey_fix，导致crash的问题始终得不到解决，ndk的bug。
-3. 多实例句柄覆盖导致内存泄漏。
-4. 二级指针带出问题，使用一级指针导致问题。
-5. 接口头文件兼容问题，导致接口出问题。
-6. 多线程的一个例子（需要准备）。
-7. 视频项目性能优化的例子（需要准备）：避免不必要的图像拷贝；
-8. shared_ptr问题：轻易传入get()给到Adpot()导致被释放；传入其引用给新线程，没增加引用计数，导致在新线程里释放。
-9. 细节问题：vector的insert()和map的insert()返回值是不同的。
-10. segment cache和out 异步线程需要2个buffer，经典双缓存，一个跑异步segment，一个送下个render算子（新线程）
-11. 不能对临时变量加引用。
-12. const变量（或指针）不能调用其非const成员函数。
-13. 可以加一个条件变量condition_variable的问题，然后在过程中把wait、notify、ready的原因搞明白。
+1. 小细节问题：1）不能对临时变量加引用；2）const变量（或指针）不能调用其非const成员函数。3）vector的insert()和map的insert()返回值是不同的。4）shared_ptr问题：轻易传入get()给到Adpot()导致被释放；传入其引用给新线程，没增加引用计数，导致在新线程里释放。
+
+2. vector的底层实现。
+
+3. dlclose nodelete问题，导致内存常驻；编译器优化了pthreadkey_fix，导致crash的问题始终得不到解决，ndk的bug。
+
+4. 多实例句柄覆盖导致内存泄漏。
+
+5. 二级指针带出问题，使用一级指针导致问题。
+
+6. 接口头文件兼容问题，导致接口出问题。
+
+7. 多线程的一个例子（需要准备）：yuvsiq多实例句柄覆盖导致内存泄漏。；segment算子、segment task的同步；尖司机条件变量wait、notify的运用（生产者消费者）。
+
+8. 视频项目性能优化的例子（需要准备）：避免不必要的图像拷贝；
+
+9. 性能优化之一：用std::move，用unique_ptr的reset(x)接管，用emplace_back()替代push_back()，都是为了指针直接指向，减少copy过程。
+
+10. segment cache和out 异步线程需要2个buffer，经典双缓存，一个跑异步segment，一个送下个render算子（新线程）。
+
+11. 可以加一个条件变量condition_variable的问题，然后在过程中把wait、notify、ready的原因搞明白。
+
+12. 终极问题：segment算子、segment task的同步。
+
+    task中，seg、depth顺序执行，如果seg时间不超过30ms，seg没问题，如果seg+depth超过30ms，则depth出问题。
+
+    因为input_img_mask、input_img_depth虽通过值传递进入task，但本质是指针，input_img_mask的data是process的中packet（packet虽是局部变量，但返回的引用）获取而来。正常情况下，process（segment算子线程）是会很快结束的（比如2ms），只不过下一个process会隔30ms再来。所以，猜测此时的input_img_mask是靠packet的引用强行续命到30ms，因此task mask过程不受影响。
+
+    而input_img_depth则没有那么好运，因为下一个process来时，task depth还没结束（此时帧率会低于30fps，因为下一个process会wait上一个segment task线程执行完毕，比如task总时间为40ms，这样就会逐渐造成延时积累），所以input_img_depth如果不在WaitUntilDone后赋值，那么input_img_depth就很可能被下一个process到来时污染（然后process卡在WaitUntilDone处，wait上一个task），此时task depth还正在用input_img_depth，因此dump的input_img_depth就有问题。
+
+13. ```cpp
+    cache_input_consume_ = std::make_unique<ImageFrame>();
+    std::unique_ptr<ImageFrame> input_image_frame_consume = input_packet.Consume<ImageFrame>();
+    cache_input_consume_.reset(input_image_frame_consume.release()); // wyh 这里是栈内存换成堆内存？
+    ```
+
+14. 
 
 **OpenGL基础&优化**
 
