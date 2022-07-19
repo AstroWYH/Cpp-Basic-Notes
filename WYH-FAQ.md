@@ -53,6 +53,8 @@
 
     而input_img_depth则没有那么好运，因为下一个process来时，task depth还没结束（此时帧率会低于30fps，因为下一个process会wait上一个segment task线程执行完毕，比如task总时间为40ms，这样就会逐渐造成延时积累），所以input_img_depth如果不在WaitUntilDone后赋值，那么input_img_depth就很可能被下一个process到来时污染（然后process卡在WaitUntilDone处，wait上一个task），此时task depth还正在用input_img_depth，因此dump的input_img_depth就有问题。
 
+    seg出图正常、depth异常问题，排查为seg算子与task两个线程同步异常导致，task中depth任务在执行时，其depth_input的buffer生命周期结束，且新的depth_input在同步前被污染，采用depth_input成员变量延长生命周期+在同步后赋值解决。
+
 13. ```cpp
     cache_input_consume_ = std::make_unique<ImageFrame>();
     std::unique_ptr<ImageFrame> input_image_frame_consume = input_packet.Consume<ImageFrame>();
