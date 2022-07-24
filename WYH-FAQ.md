@@ -11,9 +11,9 @@
 
 **要做的点**
 
-1. 视频neon项目代码，工程能力，框架。
+1. 视频neon项目代码，工程能力，框架。SDK设计原则。
 
-   包括：性能优化、多线程、设计模式。
+   包括：性能优化、多线程、设计模式。SDK设计原则。
 
 2. OpenGL优化，Shader至少学懂neon的。
 
@@ -25,27 +25,39 @@
 
 1. 小细节问题：1）不能对临时变量加引用；2）const变量（或指针）不能调用其非const成员函数。3）vector的insert()和map的insert()返回值是不同的。4）shared_ptr问题：轻易传入get()给到Adpot()导致被释放；传入其引用给新线程，没增加引用计数，导致在新线程里释放。
 
-2. vector的底层实现。
+2. 讲的内容：视频neon工程的介绍。
 
-3. dlclose nodelete问题，导致内存常驻；编译器优化了pthreadkey_fix，导致crash的问题始终得不到解决，ndk的bug。
+3. SDK设计原则，对代码有较高要求。
 
-4. 多实例句柄覆盖导致内存泄漏。
+4. 多线程的一个例子：yuvsiq多实例句柄覆盖导致内存泄漏；segment算子、segment task的同步；尖司机条件变量wait、notify的运用（生产者消费者）。
 
-5. 二级指针带出问题，使用一级指针导致问题。
+5. 线程同步：pipeline和4个算子之间（还有seg的task）就是，描述清楚。
 
-6. 接口头文件兼容问题，导致接口出问题。
+6. pipiline_neon.cc（vivo）抽成pipiline_neon.cc + pipiline_base.cc（master）的基类+子类组合。
 
-7. 多线程的一个例子（需要准备）：yuvsiq多实例句柄覆盖导致内存泄漏。；segment算子、segment task的同步；尖司机条件变量wait、notify的运用（生产者消费者）。
+7. render_manager.c（vivo）抽成neon_render_manager.cc + render_manager_base.cc + fusion_render.cc（master）。
 
-8. 视频项目性能优化的例子（需要准备）：避免不必要的图像拷贝；
+8. 后处理20%的优化。
 
-9. 性能优化之一：用std::move，用unique_ptr的reset(x)接管，用emplace_back()替代push_back()，都是为了指针直接指向，减少copy过程。
+9. vector的底层实现。
 
-10. segment cache和out 异步线程需要2个buffer，经典双缓存，一个跑异步segment，一个送下个render算子（新线程）。
+10. dlclose nodelete问题，导致内存常驻；编译器优化了pthreadkey_fix，导致crash的问题始终得不到解决，ndk的bug。
 
-11. 可以加一个条件变量condition_variable的问题，然后在过程中把wait、notify、ready的原因搞明白。
+11. 多实例句柄覆盖导致内存泄漏。
 
-12. 终极问题：segment算子、segment task的同步。
+12. 二级指针带出问题，使用一级指针导致问题。
+
+13. 接口头文件兼容问题，导致接口出问题。
+
+14. 视频项目性能优化的例子：避免不必要的图像拷贝；
+
+15. 性能优化之一：用std::move，用unique_ptr的reset(x)接管，用emplace_back()替代push_back()，都是为了指针直接指向，减少copy过程。
+
+16. segment cache和out 异步线程需要2个buffer，经典双缓存，一个跑异步segment，一个送下个render算子（新线程）。
+
+17. 可以加一个条件变量condition_variable的问题，然后在过程中把wait、notify、ready的原因搞明白。
+
+18. 终极问题：segment算子、segment task的同步。
 
     task中，seg、depth顺序执行，如果seg时间不超过30ms，seg没问题，如果seg+depth超过30ms，则depth出问题。
 
@@ -55,13 +67,13 @@
 
     seg出图正常、depth异常问题，排查为seg算子与task两个线程同步异常导致，task中depth任务在执行时，其depth_input的buffer生命周期结束，且新的depth_input在同步前被污染，采用depth_input成员变量延长生命周期+在同步后赋值解决。
 
-13. ```cpp
+19. ```cpp
     cache_input_consume_ = std::make_unique<ImageFrame>();
     std::unique_ptr<ImageFrame> input_image_frame_consume = input_packet.Consume<ImageFrame>();
     cache_input_consume_.reset(input_image_frame_consume.release()); // wyh 这里是栈内存换成堆内存？
     ```
 
-14. 
+20. 
 
 **OpenGL基础&优化**
 
