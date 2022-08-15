@@ -22,7 +22,7 @@ def convert(save_dir, shape_file_name, img_read):
                 fp.write(R[i, j])
 
     print("write success!")
-    
+
 if __name__ == '__main__':
     count = 1
     for i in os.listdir(Img_dir): # 遍历输入文件夹
