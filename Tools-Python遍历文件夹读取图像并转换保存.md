@@ -1,4 +1,4 @@
-# Tools-Python遍历文件夹读取转换保存图像
+# Tools-Python遍历文件夹读取图像并转换保存
 
 ```python
 import os
@@ -35,6 +35,5 @@ if __name__ == '__main__':
         if count == 6:  # 这里只需要5张即可
             print('convert over')
             break
-
 ```
 
