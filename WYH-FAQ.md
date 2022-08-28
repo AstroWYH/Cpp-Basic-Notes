@@ -73,7 +73,7 @@
     cache_input_consume_.reset(input_image_frame_consume.release()); // wyh 这里是栈内存换成堆内存？
     ```
 
-20. 
+20. 数组[变量]，要用常量或者const变量，或者用vector push_back()，或者用for来new。这里说new的方法，可以用容器for，但是其范围不能只能用数组名，而要用std::ranges::subrange修饰，这样才是一个可识别的range。
 
 **OpenGL基础&优化**
 
@@ -81,6 +81,7 @@
 1. 帧缓冲；纹理和渲染缓冲区；附着（颜色、深度、模板）。概念上的区分。
 1. if分支需要少写。
 1. 得学会一个render分析工具。
+1. 纹理应该确实需要先用帧缓冲绑附件，然后渲染了，才能去从gpu glReadPixels回cpu，再dump成.jpg。如果仅仅是通过glTexImage2D从buffer读取到纹理，那glReadPixels应该是读不回来的，会dump失败。
 
 **Android性能&内存&调试解决问题经验**
 
