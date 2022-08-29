@@ -9,6 +9,22 @@
 
 ## 难点
 
+**计划细节**
+
+- b站opencv python课程：后面的就挑些看，可选择输出wiki
+- mediapipe进阶：需要看代码，各模块简单弄清含义，包括scheduler、executor、inputstream、packet等
+- mediapipe工程：借已跑通wsl版，liumin、sobel算子，后续其他算子效果跑通，借此学习gl、shader，和mediapipe通用框架搭建流程。了解构建工具bazel、workspace，和其中android app构建联系
+- 明月滤镜android app：修复release bug，首先使其能正常使用 明月滤镜android app：搞懂google提供camera2/x相关调用流程
+- 明月滤镜android app：搞懂相机suface、surfacetexture、texture、surfaceview等，相机渲染前置工作相关流程
+- 明月滤镜android app：借开源opengl-es3.0代码30种滤镜shader，实现在明月app上
+- 明月滤镜android app：实现对项目neon sdk的调用，参考bokeh的方式，首先不需要JNI，通过java api跑通，并叠加效果
+- 明月滤镜android app：实现对项目neon sdk的调用，自己实现jni，通过app->neon-jni.so->neon.so的方式跑通，并叠加效果
+- neon项目JNI：需要看懂，并自己能写
+- neon项目多线程：几个线程搞清楚，从哪来的做什么事？gl线程是什么？gl finish和gl flush的区别？
+- neon项目render：加dump、log，oppo 870 v1霓虹走读，把render manager梳理清楚，shader搞清楚
+- neon项目postpro：加dump、log搞清楚，需要较浅学习ARM NEON指令
+- shader toy：学几个简单，学一个稍复杂，搞懂原理
+
 **要做的点**
 
 1. 视频neon项目代码，工程能力，框架。SDK设计原则。
