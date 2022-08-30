@@ -1,6 +1,9 @@
 # Tools-C++istringstream分割字符串
 
 ```cpp
+#include <string>
+#include <sstream>
+#include <iostream>
 void Stringsplit(string str, const char in)
 {
 	istringstream iss(str);	// 输入流

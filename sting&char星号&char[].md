@@ -9,7 +9,7 @@ const char *ch2 = str.data();
 // 此时，ch1与ch2的内容将都是”Hello World”。但是只能转换成const char*，如果去掉const编译不能通过。
 ```
 
-## string转换成char *（麻烦）
+## string转换成char *（麻烦）（实测结论：可用上述const char *方式）
 
 ```c++
 string str = "Hello World";
