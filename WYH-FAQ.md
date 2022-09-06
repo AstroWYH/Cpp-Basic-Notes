@@ -37,7 +37,20 @@
 
 4. Android能力，android studio app开发。
 
-**C++问题积累**
+**wiki问题积累（新）**
+
+- Oes纹理和普通2D纹理？OES是否代表YUV，普通是否代表RGB？
+- 异常捕获机制了解，以及为啥不常见，以及是析构还是哪不能用异常捕获，为啥？
+  Java中的listener回调机制
+- Java的匿名类，android常用
+- Java中抽象类和接口的区别？C++中只有抽象类，没有接口，深层次的原因？
+  常见的图像格式wiki：NV12 NV21 RGB BGR RGBA DEPTH GRAYSCALE
+- struct _ANCHUMHandleImpl的作用是什么？为什么需要magic？
+- 链接的重定向是怎么回事？-fPIC？
+- 预编译->编译->汇编->链接。生成过程：.o可以生成可执行(g++ -o，add_exe)、static(ar ...，add_lib)、shared(g++ ...，add_lib)。链接过程：target_link(可执行/static/shared static shared)
+- 特例：main.cpp->main可执行。这个过程仍然是main.cpp->temp->main.o->main。最后一步是链接么？链接了什么？是系统的默认库么？
+
+**C++问题积累（老）**
 
 1. 小细节问题：1）不能对临时变量加引用；2）const变量（或指针）不能调用其非const成员函数。3）vector的insert()和map的insert()返回值是不同的。4）shared_ptr问题：轻易传入get()给到Adpot()导致被释放；传入其引用给新线程，没增加引用计数，导致在新线程里释放。
 
