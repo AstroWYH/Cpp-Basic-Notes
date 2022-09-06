@@ -8,3 +8,16 @@ const char* p = "abcde";
 // 但可以再改为p = "xyz"等，因为这个字符串是指针，指针可以改，而指向物不能改。
 ```
 
+```c
+// const char* > int的转换方法：
+#include <stdio.h>
+
+int main() {
+    const char* s = "56";
+    printf("s:%s\n", s); // "56"
+    // printf("s首字符:%s\n", *s); // 报错，可能因为*s是首字符，不能用%s打印，%s是打印字符串
+    printf("*s首字符的ascii码:%d\n", *s); // 53
+    printf("*s首字符的数字形式:%d\n", *s - '0'); // 53 - 48 = 5
+}
+```
+
