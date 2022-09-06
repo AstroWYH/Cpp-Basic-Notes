@@ -21,3 +21,40 @@ int main() {
 }
 ```
 
+```c
+#include <stdio.h>
+
+int main() {
+    char *sa = "hello world";
+    sa[0] = 'H';
+}
+// 编译时会有warning，因为编译器认为sa是应在常量区，会建议写为const char* sa;
+// 此外，编译器也会直接把char *sa转换成const char *sa;
+// 运行会报错，因为const char *sa;在常量区(虚拟内存的地址很靠前)，不能修改。
+
+int main() {
+    const char *sa = "hello world";
+    sa[0] = 'H';
+}
+// 编译直接报错，因为通过sa修改了指针指向的内容。
+
+int main() {
+    char sa[] = "hello world";
+    sa[0] = 'H';
+}
+// 编译、运行都正常。因为此时的"="和之前的不同，这里会进行拷贝，而之前是直接把地址赋给指针。
+// 此处的sa不再在常量区，而在栈区，可以随意修改。
+
+int main() {
+    const char *sa = "hello world";
+    char sb[] = "hello world";
+
+    printf("sa:%p\n", sa);
+    printf("sb:%p\n", sb);
+    printf("main:%p\n", main);
+}
+// 操作系统会给每个程序一个虚拟内存，地址从0x00...开始，但其物理内存需要经过映射才知道。
+// 可以发现，sa和main会很接近，因为main的地址很靠前，sa在常量区，就在main的地址后面一点点。
+// 而sb的地址会比较大，因为在栈区。
+```
+
