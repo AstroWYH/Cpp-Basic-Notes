@@ -98,6 +98,63 @@ thread 7
 thread 8
 ```
 
+```c
+// 使用condition_variable，读线程wait，直到写线程调用 notify_all,即停止等待
+
+#include <thread>
+#include <condition_variable>
+#include <iostream>
+#include <windows.h>
+
+using namespace std;
+
+condition_variable g_cv;
+mutex g_mtx;
+int g_value = 0;
+void read_thread()
+{
+    while (true)
+    {
+        unique_lock<mutex> ul(g_mtx);
+        g_cv.wait(ul);
+        cout << g_value << endl;
+    }
+}
+void write_thread()
+{
+    while (true)
+    {
+        Sleep(1000);
+        lock_guard<mutex> lg(g_mtx);
+        g_value++;
+        g_cv.notify_all();
+    }
+}
+int main()
+{
+    thread th(read_thread);
+    th.detach();
+    thread th2(write_thread);
+    th2.detach();
+    char a;
+    while (cin >> a);
+    return 0;
+}
+
+[Running] cd "g:\work\code_test\" && g++ code.cpp -o code && "g:\work\code_test\"code
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+```
+
 
 
 ### 参考链接
