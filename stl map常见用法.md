@@ -47,7 +47,7 @@ mapStudent.insert(map<int, string>::value_type (003, "student_two")); // insert�
 
 ```cpp
 // find 返回迭代器指向当前查找元素的位置，否则返回map::end()位置
-iter = mapStudent.find("123"); // find(key)，返回iter
+auto iter = mapStudent.find("123"); // find(key)，返回iter
 if (iter != mapStudent.end())
        cout<<"Find, the value is"<<iter->second<<endl; // iter->second为key的val值
 else
@@ -56,7 +56,7 @@ else
 
 ```c++
 find和count区别:
-find函数是查找key的位置（返回迭代器）,find(key)。
+find函数是查找key的位置（返回迭代器）, find(key)。
 count函数返回的是一个容器中，某一元素出现的次数。对于map，即返回key出现的次数，但是map中的key是不允许重复出现的，故count函数返回值只能是1（存在）或0（不存在），count(key)。
 
 // 参考：https://blog.csdn.net/u013095333/article/details/90760382
@@ -66,7 +66,7 @@ count函数返回的是一个容器中，某一元素出现的次数。对于map
 
 ```c++
 // 用迭代器刪除
-iter = mapStudent.find("123");
+auto iter = mapStudent.find("123");
 mapStudent.erase(iter);
 // 用关键字刪除
 int n = mapStudent.erase("123"); // 如果刪除了会返回1，否则返回0
