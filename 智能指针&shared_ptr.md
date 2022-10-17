@@ -252,6 +252,26 @@ std::shared_ptr<int> ptr_2(ptr_1);
 
 - 另外不建议使用get()函数获取 shared_ptr 关联的原始指针，因为如果在 shared_ptr 析构之前手动调用了delete函数，同样会导致类似的错误。
 
+#### C++新经典--shared_ptr常用操作
+
+![image-20221017092808245](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017092808245.png)
+
+![image-20221017092834018](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017092834018.png)
+
+![image-20221017092903131](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017092903131.png)
+
+![image-20221017092919843](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017092919843.png)
+
+![image-20221017092941491](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017092941491.png)
+
+![image-20221017093000348](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017093000348.png)
+
+#### C++新经典--shared_ptr容易踩坑点
+
+![image-20221017093503466](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017093503466.png)
+
+![image-20221017093525922](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017093525922.png)
+
 ### 参考链接
 
 [(18条消息) C++ 智能指针 shared_ptr 详解与示例_码农小明的博客-CSDN博客_shared_ptr](https://blog.csdn.net/shaosunrise/article/details/85228823)

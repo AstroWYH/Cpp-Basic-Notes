@@ -112,7 +112,17 @@ Output:
 10
 ```
 
+#### C++新经典--unique_ptr常用操作
 
+![image-20221017093651848](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017093651848.png)
+
+![image-20221017093719335](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017093719335.png)
+
+![image-20221017093808945](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017093808945.png)
+
+![image-20221017093833663](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017093833663.png)
+
+![image-20221017093900095](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221017093900095.png)
 
 ### 参考链接
 
