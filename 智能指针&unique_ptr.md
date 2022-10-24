@@ -13,7 +13,11 @@ std::unique_ptr<int> ptr1;
 std::unique_ptr<Task> taskPtr(new Task(22));
 std::unique_ptr<Task> taskPtr = std::make_unique<Task>(34); // C++ 14 引入
 std::unique_ptr<Task> taskPtr(new std::unique_ptr<Task>::element_type(23)); // 不常用
-std::unique_ptr<Task> taskPtr2 = new Task(); // 编译错误，不能隐式构造，和shared_ptry
+std::unique_ptr<Task> taskPtr2 = new Task(); // 编译错误，不能隐式构造，和shared_ptr一样
+// 有几点需要注意：
+// 第2行是完全可以理解的，因为unique_ptr有一个构造函数，其所需参数为裸指针。
+// 第5行，如果等号左右两边是一样的类，那要么是拷贝构造，要么是拷贝赋值运算符，取决于写一行还是两行。
+// 但如果等号左右不同，则需要先进行隐式转换，再进行拷贝（构造或赋值）。此时，如果其本身构造函数不允许隐式转换，则编译错误。
 ```
 
 #### 获取被管理对象的指针
