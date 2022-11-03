@@ -61,6 +61,17 @@ for(vector<float>::iterator it = vecClass.begin();it!=vecClass.end();it++)
 }
 ```
 
+## 删除元素
+
+```cpp
+vector<int> vec = {1,2,3,4};
+vec.erase(vec.end()-2, vec.end());
+for (auto &v : vec) {
+    cout<<v<<endl;
+}
+// output： 1 2
+```
+
 ## 重新赋值
 
 ```c++
