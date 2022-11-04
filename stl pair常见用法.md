@@ -66,6 +66,32 @@ int main(int argc, char **argv) {
 }
 ```
 
+## 修改pair的值
+
+```cpp
+pair<int, double> p1 = make_pair(1, 2.0);
+p1.first = 3;
+p1.second = 4.0;
+
+cout<<p1.first<<" "<<p1.second<<endl;
+// output:3 4.0
+```
+
+## 修改tuple的值
+
+```cpp
+tuple<int, float, string> t1 = make_tuple(1, 2.0, "haha");
+
+get<0>(t1) = 100;
+get<1>(t1) = 200.0;
+get<2>(t1) = "hi";
+
+cout<<get<0>(t1)<<" "<<get<1>(t1)<<" "<<get<2>(t1)<<endl;
+// output: 100 200 hi
+```
+
+
+
 ### 参考链接
 
 [(18条消息) C++ pair的基本用法总结（整理）_sevencheng798的博客-CSDN博客_c++ pair](https://blog.csdn.net/sevenjoin/article/details/81937695?spm=1001.2101.3001.6650.2&depth_1-utm_relevant_index=4)
