@@ -158,6 +158,25 @@ int main() {
 }
 ```
 
+## int转string
+
+```cpp
+// 使用std::to_string()
+#include <iostream>
+#include <string>
+
+int main ()
+{
+  int n = 123;
+  std::string str = std::to_string(n);
+  std::cout << n << " ==> " << str << std::endl;
+
+  return 0;
+}
+```
+
+
+
 ### 参考链接
 
 [(18条消息) String用法详解_manonghouyiming的博客-CSDN博客_string](https://blog.csdn.net/manonghouyiming/article/details/79827040)
