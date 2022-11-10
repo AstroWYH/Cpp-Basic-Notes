@@ -70,6 +70,29 @@ for (auto &v : vec) {
     cout<<v<<endl;
 }
 // output： 1 2
+
+vector<int> vec = {1,2,3,4};
+
+vec.erase(vec.begin()); // 也可以写成vec.erase(vec.begin(), vec.begin() + 1); 删除的是左闭右开！
+
+for (auto &v:vec) {
+    cout<<v<<endl;
+}
+
+cout<<"-------------"<<endl;
+
+vec.erase(vec.end() - 1, vec.end());
+
+for (auto &v:vec) {
+    cout<<v<<endl;
+}
+// output
+2
+3
+4
+-------------
+2
+3
 ```
 
 ## 重新赋值
