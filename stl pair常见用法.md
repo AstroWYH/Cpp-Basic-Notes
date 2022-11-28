@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-## 修改pair的值
+## 修改&访问pair的值
 
 ```cpp
 pair<int, double> p1 = make_pair(1, 2.0);
@@ -77,7 +77,7 @@ cout<<p1.first<<" "<<p1.second<<endl;
 // output:3 4.0
 ```
 
-## 修改tuple的值
+## 修改&访问tuple的值
 
 ```cpp
 tuple<int, float, string> t1 = make_tuple(1, 2.0, "haha");
