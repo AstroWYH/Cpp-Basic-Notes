@@ -50,6 +50,27 @@
 - 预编译->编译->汇编->链接。生成过程：.o可以生成可执行(g++ -o，add_exe)、static(ar ...，add_lib)、shared(g++ ...，add_lib)。链接过程：target_link(可执行/static/shared static shared)
 - 特例：main.cpp->main可执行。这个过程仍然是main.cpp->temp->main.o->main。最后一步是链接么？链接了什么？是系统的默认库么？
 
+```cpp
+***Point***
+混合滤镜，erode+dilate
+哈希表作业、false sharing（cache）、cas/aba、非确定性多线程作业pess 16
+内存池作业
+app+filters基础滤镜+sdk
+***Issues***(typora)
+project issue:
+
+tiny issue:
+
+***Project***
+mediapipe pipeline neon/cinemamode（resize cpu-gpu/segment async(depth-seg)/render traffic cache一帧/postprocess opt(cv)/render(gl)）
+gles工程框架&所有版面的case列出
+yuvsiq（PPT）/scene/ut
+***android tools***(mem/perf/crash/trace/gpu)
+***Accumulation***
+github/cpp-basic/leetcode/opengl-opencv/android-issues/code-accumulation/design-patterns/程序员自我修养/图形学
+
+```
+
 **C++问题积累（老）**
 
 1. 小细节问题：1）不能对临时变量加引用；2）const变量（或指针）不能调用其非const成员函数。3）vector的insert()和map的insert()返回值是不同的。4）shared_ptr问题：轻易传入get()给到Adpot()导致被释放；传入其引用给新线程，没增加引用计数，导致在新线程里释放。
