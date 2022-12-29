@@ -87,8 +87,8 @@ if(taskPtr5 == nullptr) std::cout<<"taskPtr5 is empty"<<std::endl;
 #### reset() & release() & get()对比
 
 - reset()	    重置unique_ptr为空，delete其关联的指针。
-- release()	不delete关联指针，并返回关联指针。取消关联指针的所有权，unique_ptr为空。
-- get()	        仅仅返回关联指针。
+- release()	返回关联指针，并将unique_ptr置空。（不delete关联指针，但取消关联指针的所有权）。
+- get()	       仅仅返回关联指针。
 
 ```cpp
 // unique_ptr::reset example
