@@ -62,6 +62,17 @@ printk( KERN_DEBUG "scull: " "a=%d, b=%d", a, b);
 // 如果在args与省略号之间加入逗号,就变成args = a, 而省略号指向的那串参数只包含一个b。
 ```
 
+```cpp
+#define TAG "[YOOHAN]"
+
+#define LOG(msg, v...)                  \
+    do {                                \
+        printf(TAG " : " msg, ##v);     \
+    } while (0); printf("\n")
+
+LOG("set a:%d b:%f", a, b);
+```
+
 
 
 #### 参考链接

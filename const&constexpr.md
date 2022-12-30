@@ -51,28 +51,7 @@ GNU gcc编译器时，constexpr指针所指变量必须是全局变量 或 stati
 - 有些场景，编译器可以在编译期对constexpr的代码进⾏优化，提⾼效率。
 - ⽐宏来说，没有额外的开销，但更安全可靠。
 
-### mutable的用法
 
-```cpp
-class A
-{
-public:
-	A(int a):m_a(a){}
-	void matest()const;
-	void macout()const
-	{
-		cout << m_a << endl;
-	}
-private:
-	mutable int m_a; // 在定义时用mutable来突破这层限制
-};
-
-void A::matest() const // 正常情况下，成员函数被const修饰，则函数内不能修改成员变量
-{
-	m_a = 10; // 现在就可以修改了
-	cout << m_a << endl;
-}
-```
 
 ### 参考链接
 
