@@ -19,8 +19,8 @@ unordered_multimap       哈希组织的map；关键字可以重复
 ```
 
 1. 
-   map是基于红黑树实现的有序关联容器。红黑树作为一种自平衡二叉树，保障了良好的最坏情况运行时间，即它可以做到在O(log n)时间内完成查找，插入和删除。map比起unordered_map的稳定性更强，最坏为O(log n)，且有排序、范围查找key的功能。在对单次时间敏感的场景下比较建议使用map做为容器。而 unordered_map靠hash,如果碰撞最坏情况是 O(n)。
-2. unordered_map是基于哈希表实现的无序关联容器，unordered_map的增插改平均为常数时间O(1)，虽然会耗费更多的内存，如果追求多次查找平均效率最高，推荐unordered_map。
+   map是基于**红黑树**实现的有序关联容器。红黑树作为一种自平衡二叉树，保障了良好的最坏情况运行时间，即它可以做到在**O(log n)**时间内完成查找，插入和删除。map比起unordered_map的**稳定性更强**，最坏为O(log n)，且有排序、范围查找key的功能。在对单次时间敏感的场景下比较建议使用map做为容器。
+2. unordered_map是基于**哈希表**实现的无序关联容器，unordered_map的增插改**平均为常数时间O(1)**，虽然会耗费更多的内存，如果追求多次查找平均效率最高，推荐unordered_map。而**unordered_map**靠hash，**如果碰撞最坏情况是 O(n)**。
 3. multimap与map类似，区别只在于multimap关键字可以重复出现。
 
 ## 初始化&**插入元素**
@@ -110,54 +110,7 @@ int nSize = mapStudent.size();
 - vector insert()的返回值：指向被插入 `value` 的迭代器。
 - map insert()的返回值：返回由指向被插入元素的迭代器（或阻止插入的元素的迭代器）和指代插入是否发生的 bool 组成的 pair 。
 
-## map&unordered_map ”有序“&”无序“
 
-```cpp
-// 对比map和unordered_map，全部用“213”的顺序插入。
-// 可见map的key不管是顺序还是打乱插入，最终的key会自动排成升序。
-// 而unordered_map的key不管是顺序还是打乱插入，最终key排序都是不可预测的。但如果插入顺序固定，则key最终排序也固定的。
-
-map<int, char> map1;
-map1[2] = 'b';
-map1[1] = 'a';
-map1[3] = 'c';
-for (auto it = map1.begin(); it != map1.end(); it++) {
-    cout << "key:" << it->first << " val:"<< it->second << endl;
-}
-// key:1 val:a
-// key:2 val:b
-// key:3 val:c
-map<char, int> map2;
-map2['b'] = 2;
-map2['a'] = 1;
-map2['c'] = 3;
-for (auto it = map2.begin(); it != map2.end(); it++) {
-    cout << "key:" << it->first << " val:"<< it->second << endl;
-}
-// key:a val:1
-// key:b val:2
-// key:c val:3
-unordered_map<int, char> unordered_map1;
-unordered_map1[2] = 'b';
-unordered_map1[1] = 'a';
-unordered_map1[3] = 'c';
-for (auto it = unordered_map1.begin(); it != unordered_map1.end(); it++) {
-    cout << "key:" << it->first << " val:"<< it->second << endl;
-}
-// key:3 val:c
-// key:2 val:b
-// key:1 val:a
-unordered_map<char, int> unordered_map2;
-unordered_map2['b'] = 2;
-unordered_map2['a'] = 1;
-unordered_map2['c'] = 3;
-for (auto it = unordered_map2.begin(); it != unordered_map2.end(); it++) {
-    cout << "key:" << it->first << " val:"<< it->second << endl;
-}
-// key:c val:3
-// key:b val:2
-// key:a val:1
-```
 
 ### 参考链接
 

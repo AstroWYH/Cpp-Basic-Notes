@@ -33,7 +33,7 @@
 2. Program Header Table: 描述文件中的各种segments，用来告诉系统如何创建进程映像的。
 3. sections 或者 segments：segments是从运行的角度来描述elf文件，sections是从链接的角度来描述elf文件，也就是说，在链接阶段，我们可以忽略program header table来处理此文件，在运行阶段可以忽略section header table来处理此程序（所以很多加固手段删除了section header table）。从图中我们也可以看出，segments与sections是包含的关系，一个segment包含若干个section。
 4. Section Header Table: 包含了文件各个segction的属性信息，我们都将结合例子来解释。
-  
+
 
 ![image-20221123164434631](https://hanbabang-1311741789.cos.ap-chengdu.myqcloud.com/Pics/image-20221123164434631.png)
 
@@ -52,7 +52,7 @@
 
 #### 符号表(.dynsym)
 
-- 符号表包含用来定位、重定位程序中符号定义和引用的信息，简单的理解就是符号表记录了该文件中的所有符号，所谓的符号就是经过修饰了的函数名或者变量名，不同的编译器有不同的修饰规则。
+- 符号表包含用来定位、重定位程序中符号定义和引用的信息，简单的理解就是符号表记录了该文件中的所有符号，所谓的符号就是**经过修饰了**的**函数名**或者**变量名**，不同的编译器有不同的修饰规则。
 - 例如符号_ZL15global_static_a，就是由global_static_a变量名经过修饰而来。
 
 #### 重定位表(.rel.text/.rel.dyn/.rel.dyn)

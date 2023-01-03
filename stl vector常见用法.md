@@ -104,7 +104,7 @@ for (auto &n : nums) {
     cout<< n << endl; // 0 1 2 3
 }
 
-nums = {0,1,5}; // 可以c直接覆盖，传统数组不行。
+nums = {0,1,5}; // 可以直接覆盖，传统数组不行。
 for (auto &n : nums) {
     cout<< n << endl; // 0 1 5
 }
@@ -146,12 +146,9 @@ sort(vec.begin(),vec.end(),Comp)
     
 // (3) 使用find()查找，查找vec中的6，返回迭代器
 vector<int>::iterator it = find(vec.begin(), vec.end(), 6);
-if (it != vec.end())
-{
+if (it != vec.end()) {
     cout<<*it<<endl;
-}
-else
-{
+} else {
     cout<<"can not find"<<endl;
 }
 ```

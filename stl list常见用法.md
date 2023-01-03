@@ -40,7 +40,7 @@ list中输出元素：1,2,3,4,9,9
 清空list中的所有元素。
 
 // front()和back()
-通过front()可以获得list容器中的头部元素的引用，通过back()可以获得list容器的最后一个元素的引用。注意：当list元素为空时，这时候调用front()和back()不会报错。因此在编写程序时，最好先调用empty()函数判断list是否为空，再调用front()和back()函数。
+通过front()可以获得list容器中的头部元素的引用，通过back()可以获得list容器的最后一个元素的引用。注意：当list元素为空时，这时候调用front()和back()会报错。因此在编写程序时，最好先调用empty()函数判断list是否为空，再调用front()和back()函数。
 
 // pop_back()和pop_front()
 使用pop_back()可以删掉尾部第一个元素，pop_front()可以删掉头部第一个元素。注意：list必须不为空，如果当list为空的时候调用pop_back()和pop_front()会使程序崩掉。
@@ -101,14 +101,6 @@ list<int>a{6,7,8,9,7,10};
 a.remove(7);
 删除了a中所有值为7的元素，此时a中元素为6,8,9,10
 
-15、remove()函数
-
-从list中删除元素
-
-list<int>a{6,7,8,9,7,10};
-a.remove(7);
-删除了a中所有值为7的元素，此时a中元素为6,8,9,10
-
 // remove_if()函数
 括号中可以传入:
 （1）回调函数
@@ -122,7 +114,7 @@ a.remove(7);
 用于比较的类还应当包含必要的构造函数，用于传递参数。
 使用方法：list.remove_if(classname(args))
 例1：
-bool is_odd(constint& value){
+bool is_odd(const int& value){
     return (value==4);
 }
 

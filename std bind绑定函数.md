@@ -70,11 +70,11 @@ int main(int argc, const char * argv[])
     auto f1 = std::bind(fun,1,2,3); //表示绑定函数 fun 的第一，二，三个参数值为： 1 2 3
     f1(); //print:1  2  3
 
-    auto f2 = std::bind(fun, placeholders::_1,placeholders::_2,3);
+    auto f2 = std::bind(fun, placeholders::_1, placeholders::_2,3);
     //表示绑定函数 fun 的第三个参数为 3，而fun 的第一，二个参数分别有调用 f2 的第一，二个参数指定
     f2(1,2);//print:1  2  3
 
-    auto f3 = std::bind(fun,placeholders::_2,placeholders::_1,3);
+    auto f3 = std::bind(fun, placeholders::_2, placeholders::_1,3);
     //表示绑定函数 fun 的第三个参数为 3，而fun 的第一，二个参数分别有调用 f3 的第二，一个参数指定
     //注意： f2  和  f3 的区别。
     f3(1,2);//print:2  1  3
@@ -82,14 +82,14 @@ int main(int argc, const char * argv[])
     int n = 2;
     int m = 3;
 
-    auto f4 = std::bind(fun_2, n,placeholders::_1); // 实际上就是传的n,m
+    auto f4 = std::bind(fun_2, n, placeholders::_1); // 实际上就是传的n,m
     f4(m); //print:3  4
 
     cout<<m<<endl;//print:4  说明：m是引用传递，bind对于通过std::placeholders传递的参数是引用传递
     cout<<n<<endl;//print:2  说明：n是值传递，bind对于直接传递的参数是值传递，可通过std::ref或std::cref引用传递
 
     A a;
-    auto f5 = std::bind(&A::fun_3, &a,placeholders::_1, placeholders::_2);
+    auto f5 = std::bind(&A::fun_3, &a, placeholders::_1, placeholders::_2);
     f5(10,20);//print:10 20
 
     std::function<void(int,int)> fc = std::bind(&A::fun_3, &a, std::placeholders::_1, std::placeholders::_2);

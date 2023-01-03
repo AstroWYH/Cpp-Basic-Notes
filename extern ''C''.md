@@ -3,7 +3,7 @@
 ### 作用
 
 - extern "C"是C++特有的指令（C无法使用该指令），目的在于**支持C++与C混合编程**。
-- extern “C”的作用是告诉C++编译器**用C规则编译指定的代码**（除函数重载外，extern “C”不影响C++其他特性）。
+- extern "C"的作用是告诉C++编译器**用C规则编译指定的代码**（除函数重载外，extern "C"不影响C++其他特性）。
 
 ### 原因
 
@@ -53,7 +53,7 @@ void Function(int a, int b)
     printf("Hello!!! a = %d, b = %d\n", a, b);
 }
 
-/* main,cpp */
+/* main.cpp */
 extern void Function(int a, int b);
  
 int main()
@@ -74,7 +74,7 @@ collect2: 错误：ld 返回 1
 .LC0:
     .string    "Hello!!! a = %d, b = %d\n"
     .text
-    .p2align 4,,15
+    .p2align 4,15
     .globl    Function
     .type    Function, @function
 Function:
@@ -114,6 +114,8 @@ main:
     .ident    "GCC: (GNU) 6.4.1 20170727 (Red Hat 6.4.1-1)"
     .section    .note.GNU-stack,"",@progbits
 ```
+
+
 
 ### 参考链接
 

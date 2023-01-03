@@ -139,42 +139,6 @@ str.compare(0,2,str,2,2)——用str的 下标0 开始的 2个字符 和 str的 
 str.compare(1,2,”bcx”,2)——用str的 下标1 开始的 2个字符 和 "bcx"的 前 2个 字符比较——就是用 "bc" 和 "bc”" 比较，返回0。
 ```
 
-## "abc"&"a"&'a'对比
-
-```c++
-#include <iostream>
-#include <typeinfo> // 可用于打印类型
-using namespace std;
-
-int main() {
-    string str1 = "abc";
-    string str2 = "a";
-    // string str3 = 'b'; // 报错，单引号是char不是string类型
-    cout << typeid(str1).name() << endl; // cout: NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
-    for (auto s : str1) {
-        cout << typeid(s).name() << endl; // cout: c
-    }
-    cout << typeid(str2).name() << endl; // cout: NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
-}
-```
-
-## int转string
-
-```cpp
-// 使用std::to_string()
-#include <iostream>
-#include <string>
-
-int main ()
-{
-  int n = 123;
-  std::string str = std::to_string(n);
-  std::cout << n << " ==> " << str << std::endl;
-
-  return 0;
-}
-```
-
 
 
 ### 参考链接
