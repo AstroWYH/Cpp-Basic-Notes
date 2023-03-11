@@ -36,8 +36,8 @@ int main()
 
     vector<A> v222;
     v222.emplace_back(5);
-    cout << "--------6-------" << endl; // 此时，emplace_back无需构造，直接move
-
+    cout << "--------6-------" << endl; // emplace_back直接构造，无需move
+    
     return 0;
 }
 //A()
