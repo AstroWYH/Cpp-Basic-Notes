@@ -101,3 +101,15 @@ int main(){
 [(21条消息) C++11新特性，推荐使用emplace_back()替换push_back()的原因_Kuany_的博客-CSDN博客](https://blog.csdn.net/weixin_44718794/article/details/108321232?spm=1001.2101.3001.6661.1&depth_1-utm_relevant_index=1)
 
 [(21条消息) C++ std::vector 的 emplace_back 能否完全取代 push_back_Sprite丶雪碧的博客-CSDN博客](https://blog.csdn.net/u012088909/article/details/105309570?spm=1001.2101.3001.6661.1&depth_1-utm_relevant_index=1)
+
+### 问题描述
+
+4k电影模式性能不满足要求。
+
+### 解决方式
+
+将gpu resize算子替换为cpu resize。
+
+### 影响范围
+
+临时验证，无影响。
