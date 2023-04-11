@@ -70,7 +70,7 @@ for(auto &s : set) // ok
 ### unordered_set不能放入pair
 
 ```cpp
-unordered_set<pair<int, int>> set; // error，unordered_set不能放入pair，unordered_map同理
+unordered_set<pair<int, int>> set; // error，s，unordered_map同理
 set<pair<int, int>> set; // ok
 ```
 
