@@ -69,7 +69,7 @@ public:
 
   T *operator->() // 重载->操作符
   {
-    return p;
+    return mPtr;
   }
   T *get() { return mPtr; }
 
