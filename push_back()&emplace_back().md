@@ -1,6 +1,32 @@
 # push_back()&emplace_back()
 
 ```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+class Person {
+public:
+    Person(const std::string& name, int age) : name_(name), age_(age) {
+        std::cout << "Constructing: " << name_ << std::endl;
+    }
+
+private:
+    std::string name_;
+    int age_;
+};
+
+int main() {
+    std::vector<Person> persons;
+
+    persons.push_back(Person("Alice", 25));  // Using push_back
+    persons.emplace_back("Bob", 30);        // Using emplace_back
+
+    return 0;
+}
+在上面的例子中，当使用 push_back 时，首先会创建一个临时的 Person 对象，然后将该临时对象拷贝（或移动）到容器中。而在使用 emplace_back 时，直接在容器中构造 Person 对象，避免了额外的临时对象的创建和拷贝（或移动）操作。
+总的来说，emplace_back 可以在插入新元素时避免不必要的额外操作，从而提供更好的性能。然而，具体性能优势可能因不同的情况而异，应该在实际使用时进行性能测试和评估。
+
 class A
 {
 public:
