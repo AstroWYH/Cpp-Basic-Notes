@@ -1,4 +1,39 @@
 ```cpp
+package adu.perception.foreground;
+
+message SomeProcessorLogger {
+  optional int32 some_processor_int = 1;
+  optional double some_processor_double = 2;
+  optional string some_processor_string = 3;
+  repeated DataFusionLogger data_fusion_logger = 4;
+}
+
+message DataFusionLogger {
+  optional int32 data_fusion_int = 1;
+  optional double data_fusion_double = 2;
+  optional string data_fusion_string = 3;
+  repeated RadarLogger radar_logger = 4;
+
+  repeated DataFusionTrack data_fusion_track = 5;
+}
+
+message RadarLogger {
+  optional int32 radar_int = 1;
+  optional double radar_double = 2;
+  optional string radar_string = 3;
+}
+
+message DataFusionTrack {
+  optional int32 data_fusion_track = 1;
+  repeated DataFusionObject data_fusion_object = 2;
+}
+
+message DataFusionObject {
+  optional int32 data_fusion_object_id = 1;
+  optional double data_fusion_object_speed = 2;
+  optional string data_fusion_object_name = 3;
+}
+
 #include <condition_variable>
 #include <deque>
 #include <functional>
