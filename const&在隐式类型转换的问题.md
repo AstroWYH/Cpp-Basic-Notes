@@ -62,34 +62,34 @@ int main() {
   {
     Eigen::Vector2d state_gain = kalman_gain_matrix * measurment_residual;
     cout << "Eigen state_gain\n" << state_gain << endl;
-    cout << "orgin typeinfo state_gain " << typeid(state_gain).name() << std::endl;
+    cout << "Eigen typeinfo state_gain " << typeid(state_gain).name() << std::endl;
   }
 
   {
     const auto& state_gain =
         kalman_gain_matrix * measurment_residual;
     cout << "const auto& state_gain\n" << state_gain << endl;
-    cout << "const typeinfo state_gain " << typeid(state_gain).name() << std::endl;
+    cout << "const auto& typeinfo state_gain " << typeid(state_gain).name() << std::endl;
   }
 
   {
     const Eigen::Vector2d& state_gain =
-        kalman_gain_matrix * measurment_residual; // 此时const Eigen&未进行隐式类型转换转换，为空导致异常。
+        kalman_gain_matrix * measurment_residual; // 此时 const Eigen& 未发生隐式类型转换，为空导致异常
     cout << "const Eigen& state_gain\n" << state_gain << endl;
-    cout << "const typeinfo state_gain " << typeid(state_gain).name() << std::endl;
+    cout << "const Eigen& typeinfo state_gain " << typeid(state_gain).name() << std::endl;
   }
 
 // output
 Eigen state_gain
 0.42174
 0.0668704
-orgin typeinfo state_gain N5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEE
+Eigen typeinfo state_gain N5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEE
 const auto& state_gain
 0.42174
 0.0668704
-const typeinfo state_gain N5Eigen17CoeffBasedProductIRKNS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEERKNS1_IdLi2ELi1ELi0ELi2ELi1EEELi6EEE
+const auto& typeinfo state_gain N5Eigen17CoeffBasedProductIRKNS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEERKNS1_IdLi2ELi1ELi0ELi2ELi1EEELi6EEE
 const Eigen& state_gain
-6.90066e-310 // 此时const Eigen&未进行隐式类型转换转换，为空导致异常。
-4.65937e-310
-const typeinfo state_gain N5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEE
+6.94e-310 // 此时 const Eigen& 未发生隐式类型转换，为空导致异常
+4.6553e-310
+const Eigen& typeinfo state_gain N5Eigen6MatrixIdLi2ELi1ELi0ELi2ELi1EEE
 ```
