@@ -1,4 +1,10 @@
 ```cpp
+
+在main.cpp中，同时包含A.h和B.h
+其中，A.h include "B.h"， B.h include "A.h"
+产生循环引用问题
+解决方式：采用class前置声明 
+
 // A.h
 #pragma once
 
