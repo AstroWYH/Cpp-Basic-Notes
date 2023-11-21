@@ -1,4 +1,4 @@
-```
+```cpp
 // A.h
 #pragma once
 
@@ -26,7 +26,6 @@ public:
 //};
 //
 ////#endif // A_H
-
 
 // B.h
 #pragma once
